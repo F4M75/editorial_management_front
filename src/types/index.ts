@@ -71,6 +71,19 @@ export interface EmailNotification {
   status: 'sent' | 'failed';
 }
 
+export interface Stats {
+  articles: {
+    total: number;
+    draft: number;
+    published: number;
+    archived: number;
+  };
+  byNetwork: { id: string; name: string; count: number }[];
+  byCategory: { id: string; name: string; color: string; count: number }[];
+  recentArticles: Article[];
+  recentNotifications: EmailNotification[];
+}
+
 export interface LoginCredentials {
   email: string;
   password: string;
