@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { toast } from 'sonner';
 import { ArrowLeft, Save, Star, StarOff, Clock, CheckCircle2, Circle } from 'lucide-react';
 import { articleService } from '@/services/article.service';
@@ -15,24 +14,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import RichTextEditor from '@/components/articles/RichTextEditor';
 import ArticlePreview from '@/components/articles/ArticlePreview';
-import type { Category } from '@/types';
+import { articleFormSchema } from '@/schemas';
+import type { Category, ArticleFormValues } from '@/types';
 
-// ─── Schema ───────────────────────────────────────────────────────────────────
-
-const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').trim();
-
-const schema = z.object({
-  title:      z.string().min(5, 'Le titre doit contenir au moins 5 caractères'),
-  excerpt:    z.string().min(1, "L'extrait est requis"),
-  content:    z.string().refine((v) => stripHtml(v).length >= 50, 'Le contenu doit contenir au moins 50 caractères'),
-  author:     z.string().min(1, "L'auteur est requis"),
-  networkId:  z.string().min(1, 'Le réseau est obligatoire'),
-  categories: z.array(z.string()).min(1, 'Sélectionnez au moins une catégorie'),
-  status:     z.enum(['draft', 'published', 'archived']),
-  featured:   z.boolean(),
-});
-
-type FormValues = z.infer<typeof schema>;
+type FormValues = ArticleFormValues;
 
 // ─── Save indicator ───────────────────────────────────────────────────────────
 
@@ -68,7 +53,7 @@ const ArticleFormPage = () => {
   const autoSaveRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const { control, handleSubmit, watch, setValue, reset, formState: { errors, isDirty } } = useForm<FormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(articleFormSchema),
     defaultValues: {
       title: '', excerpt: '', content: '', author: '',
       networkId: '', categories: [], status: 'draft', featured: false,
