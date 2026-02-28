@@ -8,6 +8,7 @@ import ArticlesPage from '@/pages/ArticlesPage';
 import ArticleFormPage from '@/pages/ArticleFormPage';
 import CategoriesPage from '@/pages/CategoriesPage';
 import NotificationsPage from '@/pages/NotificationsPage';
+import ImportPage from '@/pages/ImportPage';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/articles/:id/edit" element={<ArticleFormPage />} />
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/import" element={<ImportPage />} />
           </Route>
         </Route>
 
