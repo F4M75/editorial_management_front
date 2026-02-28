@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { Send, Bell, ChevronLeft, ChevronRight, CheckCircle2, XCircle, Users, Calendar, Newspaper } from 'lucide-react';
+import { Send, Bell, ChevronLeft, ChevronRight, CheckCircle2, XCircle, Users, Calendar, Newspaper, Eye, Mail } from 'lucide-react';
 import { articleService } from '@/services/article.service';
 import { notificationService } from '@/services/notification.service';
 import { notifyFormSchema } from '@/schemas';
@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import type { Article, EmailNotification, NotifyFormValues, PaginatedResponse } from '@/types';
 
 // ─── Email preview renderer ───────────────────────────────────────────────────
@@ -112,6 +113,25 @@ const NotificationsPage = () => {
   const [historyPage, setHistoryPage] = useState(1);
   const [history, setHistory] = useState<PaginatedResponse<EmailNotification> | null>(null);
   const [historyLoading, setHistoryLoading] = useState(true);
+
+  // ── Preview dialog ────────────────────────────────────────────────────────
+  const [previewNotif, setPreviewNotif] = useState<EmailNotification | null>(null);
+  const [previewArticle, setPreviewArticle] = useState<Article | null>(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
+
+  const openPreview = async (notif: EmailNotification) => {
+    setPreviewNotif(notif);
+    setPreviewArticle(null);
+    setPreviewLoading(true);
+    try {
+      const article = await articleService.getById(notif.articleId);
+      setPreviewArticle(article);
+    } catch {
+      toast.error("Impossible de charger l'article");
+    } finally {
+      setPreviewLoading(false);
+    }
+  };
 
   // ── Form ──────────────────────────────────────────────────────────────────
   const { control, handleSubmit, watch, setValue, reset, formState: { errors, isSubmitting } } =
@@ -286,11 +306,12 @@ const NotificationsPage = () => {
 
         <div className="bg-white rounded-xl border overflow-hidden">
           {/* Table header */}
-          <div className="grid grid-cols-[1fr_auto_auto_auto] gap-4 px-5 py-3 border-b bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          <div className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-4 px-5 py-3 border-b bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wider">
             <span className="flex items-center gap-1.5"><Newspaper size={12} /> Article</span>
             <span className="flex items-center gap-1.5"><Users size={12} /> Destinataires</span>
             <span className="flex items-center gap-1.5"><Calendar size={12} /> Date</span>
             <span>Statut</span>
+            <span></span>
           </div>
 
           {/* Rows */}
@@ -313,7 +334,11 @@ const NotificationsPage = () => {
           ) : (
             <div className="divide-y">
               {history?.data.map((notif) => (
-                <div key={notif.id} className="grid grid-cols-[1fr_auto_auto_auto] gap-4 px-5 py-4 items-center hover:bg-gray-50 transition-colors">
+                <div
+                  key={notif.id}
+                  onClick={() => openPreview(notif)}
+                  className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-4 px-5 py-4 items-center hover:bg-gray-50 transition-colors cursor-pointer group"
+                >
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">{notif.article.title}</p>
                     <p className="text-xs text-gray-400 truncate mt-0.5">{notif.subject}</p>
@@ -326,6 +351,7 @@ const NotificationsPage = () => {
                     })}
                   </span>
                   <StatusBadge status={notif.status} />
+                  <Eye size={15} className="text-gray-300 group-hover:text-gray-500 transition-colors" />
                 </div>
               ))}
             </div>
@@ -358,6 +384,61 @@ const NotificationsPage = () => {
           )}
         </div>
       </div>
+      {/* ── Preview dialog ── */}
+      <Dialog open={!!previewNotif} onOpenChange={(open) => { if (!open) { setPreviewNotif(null); setPreviewArticle(null); } }}>
+        <DialogContent className="max-w-3xl w-full p-0 gap-0 overflow-hidden">
+          <DialogHeader className="px-6 py-4 border-b bg-gray-50 shrink-0">
+            <DialogTitle className="flex items-center gap-2 text-base">
+              <Mail size={16} className="text-gray-400" />
+              Prévisualisation de l'email
+            </DialogTitle>
+          </DialogHeader>
+
+          {previewNotif && (
+            <div className="flex flex-col">
+              {/* Metadata strip */}
+              <div className="grid grid-cols-3 gap-px bg-gray-100 border-b text-xs shrink-0">
+                <div className="bg-white px-4 py-3 space-y-0.5">
+                  <p className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Sujet</p>
+                  <p className="text-gray-800 font-medium truncate">{previewNotif.subject}</p>
+                </div>
+                <div className="bg-white px-4 py-3 space-y-0.5">
+                  <p className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Destinataires</p>
+                  <p className="text-gray-800">{previewNotif.recipients.join(', ')}</p>
+                </div>
+                <div className="bg-white px-4 py-3 space-y-0.5 flex flex-col justify-between">
+                  <p className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Envoyé le</p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-gray-800">
+                      {new Date(previewNotif.sentAt).toLocaleDateString('fr-FR', {
+                        day: 'numeric', month: 'long', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit',
+                      })}
+                    </p>
+                    <StatusBadge status={previewNotif.status} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Email preview */}
+              {previewLoading ? (
+                <div className="flex items-center justify-center h-96 text-gray-400 text-sm gap-2">
+                  <div className="h-4 w-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+                  Chargement de l'aperçu…
+                </div>
+              ) : (
+                <iframe
+                  srcDoc={renderPreview(previewArticle, previewNotif.subject)}
+                  title="Email preview"
+                  className="w-full border-0"
+                  style={{ height: '480px' }}
+                  sandbox="allow-same-origin"
+                />
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
