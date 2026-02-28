@@ -13,4 +13,5 @@ export type {
   PaginatedResponse,
   CategoryFormValues,
   ArticleFormValues,
+  NotifyFormValues,
 } from '@/schemas';

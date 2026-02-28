@@ -117,6 +117,15 @@ export const categoryFormSchema = z.object({
   color:       z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Couleur hexadécimale invalide'),
 });
 
+export const notifyFormSchema = z.object({
+  articleId:  z.string().min(1, "Sélectionnez un article"),
+  recipients: z.string().min(1, "Au moins un destinataire requis").refine(
+    (v) => v.split(',').map((e) => e.trim()).filter(Boolean).every((e) => z.string().email().safeParse(e).success),
+    "Un ou plusieurs emails sont invalides"
+  ),
+  subject: z.string().min(1, "Le sujet est requis"),
+});
+
 export const articleFormSchema = z.object({
   title:      z.string().min(5, 'Le titre doit contenir au moins 5 caractères'),
   excerpt:    z.string().min(1, "L'extrait est requis"),
@@ -140,6 +149,7 @@ export type Stats              = z.infer<typeof StatsSchema>;
 export type LoginCredentials   = z.infer<typeof LoginCredentialsSchema>;
 export type AuthResponse       = z.infer<typeof AuthResponseSchema>;
 export type ArticleFilters     = z.infer<typeof ArticleFiltersSchema>;
-export type CategoryFormValues = z.infer<typeof categoryFormSchema>;
-export type ArticleFormValues  = z.infer<typeof articleFormSchema>;
+export type CategoryFormValues  = z.infer<typeof categoryFormSchema>;
+export type ArticleFormValues   = z.infer<typeof articleFormSchema>;
+export type NotifyFormValues    = z.infer<typeof notifyFormSchema>;
 export type PaginatedResponse<T> = { data: T[]; meta: { total: number; page: number; limit: number; totalPages: number } };
