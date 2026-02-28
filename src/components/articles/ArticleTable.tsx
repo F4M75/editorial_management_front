@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   MoreHorizontal, ArrowUpDown, ArrowUp, ArrowDown,
   Pencil, Trash2, Archive, Star, StarOff, CheckCircle,
@@ -61,6 +62,7 @@ const ArticleTable = ({
   articles, isLoading, selectedIds, sortBy, sortDir,
   onSort, onSelect, onSelectAll, onDelete, onStatusChange, onToggleFeatured,
 }: ArticleTableProps) => {
+  const navigate = useNavigate();
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const allSelected = articles.length > 0 && articles.every((a) => selectedIds.includes(a.id));
 
@@ -186,7 +188,7 @@ const ArticleTable = ({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem className="gap-2">
+                    <DropdownMenuItem className="gap-2" onClick={() => navigate(`/articles/${article.id}/edit`)}>
                       <Pencil size={14} /> Éditer
                     </DropdownMenuItem>
 

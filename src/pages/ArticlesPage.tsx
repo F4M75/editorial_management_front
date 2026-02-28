@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useArticles } from '@/hooks/useArticles';
 import { useCategories } from '@/hooks/useCategories';
@@ -23,6 +24,8 @@ const DEFAULT_FILTERS = {
 };
 
 const ArticlesPage = () => {
+  const navigate = useNavigate();
+
   // ── Filters ──────────────────────────────────────────────────────────────
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const debouncedSearch = useDebounce(filters.search, 400);
@@ -125,11 +128,16 @@ const ArticlesPage = () => {
   return (
     <div className="p-8 space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Articles</h1>
-        <p className="text-sm text-gray-500 mt-1">
-          {meta ? `${meta.total} article${meta.total > 1 ? 's' : ''}` : '—'}
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Articles</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            {meta ? `${meta.total} article${meta.total > 1 ? 's' : ''}` : '—'}
+          </p>
+        </div>
+        <Button onClick={() => navigate('/articles/new')} className="gap-2">
+          <Plus size={16} /> Nouvel article
+        </Button>
       </div>
 
       {/* Filters */}
@@ -169,10 +177,12 @@ const ArticlesPage = () => {
       </div>
 
       {/* Pagination */}
-      {meta && meta.totalPages > 1 && (
+      {meta && (
         <div className="flex items-center justify-between text-sm text-gray-500">
           <span>
-            Page {meta.page} sur {meta.totalPages}
+            {meta.total === 0
+              ? 'Aucun article'
+              : `${(meta.page - 1) * LIMIT + 1}–${Math.min(meta.page * LIMIT, meta.total)} sur ${meta.total}`}
           </span>
           <div className="flex items-center gap-2">
             <Button
