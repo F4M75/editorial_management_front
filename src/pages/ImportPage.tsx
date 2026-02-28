@@ -127,13 +127,10 @@ const ImportPage = () => {
   // ── Download sample ────────────────────────────────────────────────────────
 
   const downloadSample = () => {
-    const blob = new Blob([FORMAT_SAMPLE], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
+    a.href = '/articles-import-exemple.json';
     a.download = 'articles-import-exemple.json';
     a.click();
-    URL.revokeObjectURL(url);
   };
 
   return (

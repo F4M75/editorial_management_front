@@ -1,0 +1,82 @@
+[
+  {
+    "title": "Le spatial privé : la nouvelle conquête des milliardaires",
+    "content": "<p>SpaceX, Blue Origin, Virgin Galactic... Les entreprises privées se sont lancées dans une course effrénée à la conquête spatiale. Ce qui était autrefois l'apanage des États est désormais disputé par des acteurs privés aux ambitions démesurées.</p><p>Entre tourisme spatial, exploitation des astéroïdes et colonisation de Mars, les projets foisonnent et redessinent les contours de l'exploration spatiale du XXIe siècle. Les experts s'interrogent sur la régulation de cet espace devenu un marché comme les autres.</p>",
+    "excerpt": "Les entreprises privées redéfinissent les règles de la conquête spatiale.",
+    "author": "Marie Dupont",
+    "network": "Tech & Innovation",
+    "category": "technologie",
+    "status": "published",
+    "featured": true
+  },
+  {
+    "title": "Sobriété numérique : réduire l'empreinte carbone d'Internet",
+    "content": "<p>Internet représente aujourd'hui environ 4 % des émissions mondiales de CO₂, un chiffre en constante augmentation. Face à ce constat alarmant, le concept de sobriété numérique gagne du terrain.</p><p>Des pratiques simples comme compresser ses images, nettoyer sa boîte mail ou limiter le streaming en haute définition peuvent avoir un impact collectif significatif. Entreprises et collectivités commencent à intégrer ces pratiques dans leurs politiques RSE.</p>",
+    "excerpt": "Internet pèse lourd sur le climat. La sobriété numérique s'impose comme une nécessité.",
+    "author": "Marie Dupont",
+    "network": "Tech & Innovation",
+    "category": "technologie",
+    "status": "published",
+    "featured": false
+  },
+  {
+    "title": "Inflation : les ménages face à la hausse des prix alimentaires",
+    "content": "<p>Après deux années de forte inflation, les prix alimentaires continuent de peser sur le pouvoir d'achat des ménages français. Les rayons de grande surface affichent des hausses allant de 8 à 15 % sur les produits de base.</p><p>Face à cette situation, les comportements de consommation évoluent : marques distributeurs, achats en vrac et circuits courts gagnent en popularité. Les associations de consommateurs réclament un bouclier tarifaire pérenne.</p>",
+    "excerpt": "Les prix alimentaires restent élevés et contraignent les ménages à adapter leurs habitudes.",
+    "author": "Admin",
+    "network": "Presse Nationale",
+    "category": "economie",
+    "status": "published",
+    "featured": false
+  },
+  {
+    "title": "Le retour en grâce du jazz dans la culture populaire",
+    "content": "<p>Portée par des artistes comme Esperanza Spalding, Kamasi Washington ou encore le collectif parisien Soul Square, la musique jazz connaît un renouveau inattendu auprès des jeunes générations.</p><p>Les clubs de jazz affichent complet, les ventes de vinyles s'envolent et les collaborations entre jazz et hip-hop se multiplient. Une vitalité qui contraste avec la discrétion médiatique dont souffre souvent le genre.</p>",
+    "excerpt": "Le jazz séduit à nouveau les jeunes grâce à une scène créative et des fusions inédites.",
+    "author": "Jean Martin",
+    "network": "Culture & Société",
+    "category": "culture",
+    "status": "published",
+    "featured": true
+  },
+  {
+    "title": "Réforme des retraites : ce que prévoit le projet de loi",
+    "content": "<p>Le gouvernement a présenté son projet de réforme des retraites qui prévoit un décalage progressif de l'âge légal de départ et une révision du calcul des pensions. Les syndicats ont d'ores et déjà annoncé une mobilisation nationale.</p><p>Le texte prévoit également une revalorisation des petites pensions et un mécanisme de départ anticipé pour les carrières longues. Son passage à l'Assemblée nationale s'annonce particulièrement mouvementé.</p>",
+    "excerpt": "Le projet de réforme des retraites prévoit un report progressif de l'âge de départ.",
+    "author": "Admin",
+    "network": "Presse Nationale",
+    "category": "politique",
+    "status": "published",
+    "featured": false
+  },
+  {
+    "title": "Santé mentale des jeunes : un plan national ambitieux",
+    "content": "<p>Face à la hausse des troubles anxieux et dépressifs chez les 15-25 ans, le ministère de la Santé lance un plan national doté de 400 millions d'euros sur trois ans. Il prévoit le recrutement de 3 000 psychologues scolaires supplémentaires.</p><p>Les associations spécialisées saluent l'effort budgétaire tout en alertant sur les délais de mise en œuvre et la pénurie de professionnels formés disponibles à court terme.</p>",
+    "excerpt": "Un plan de 400 M€ pour renforcer l'accès aux soins psychologiques chez les jeunes.",
+    "author": "Admin",
+    "network": "Presse Nationale",
+    "category": "sante",
+    "status": "published",
+    "featured": false
+  },
+  {
+    "title": "Open source : la montée en puissance des LLM locaux",
+    "content": "<p>Des modèles de langage légers et open source comme Mistral, Llama ou Phi-3 gagnent rapidement du terrain face aux géants propriétaires. Leur principal atout : ils tournent sur du matériel grand public sans envoyer de données vers des serveurs externes.</p><p>Pour les entreprises soucieuses de la confidentialité, c'est une alternative crédible. Les communautés de développeurs contribuent à une amélioration continue de ces modèles à un rythme soutenu.</p>",
+    "excerpt": "Les LLM open source s'imposent comme une alternative viable aux modèles propriétaires.",
+    "author": "Marie Dupont",
+    "network": "Tech & Innovation",
+    "category": "technologie",
+    "status": "draft",
+    "featured": false
+  },
+  {
+    "title": "Biennale de Venise : l'art africain à l'honneur",
+    "content": "<p>La 61e Biennale de Venise place les créateurs du continent africain au cœur de son édition 2025. Avec près de quarante pavillons nationaux et une sélection officielle largement renouvelée, la manifestation entend bousculer les hiérarchies établies du marché de l'art contemporain.</p><p>Des installations monumentales, des performances et des œuvres vidéo explorent les thèmes de la mémoire coloniale, de l'identité et de la résilience. Une édition qui fera date.</p>",
+    "excerpt": "La Biennale 2025 met en lumière une scène artistique africaine bouillonnante.",
+    "author": "Jean Martin",
+    "network": "Culture & Société",
+    "category": "culture",
+    "status": "draft",
+    "featured": false
+  }
+]
