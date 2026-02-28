@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, FileText, Tag, Bell, LogOut } from 'lucide-react';
+import { LayoutDashboard, FileText, Tag, Bell, Upload, LogOut } from 'lucide-react';
 import { useAuthStore } from '@/context/auth.store';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -9,6 +9,7 @@ const navItems = [
   { to: '/articles', label: 'Articles', icon: FileText },
   { to: '/categories', label: 'Catégories', icon: Tag },
   { to: '/notifications', label: 'Notifications', icon: Bell },
+  { to: '/import',        label: 'Import',         icon: Upload },
 ];
 
 const Sidebar = () => {
